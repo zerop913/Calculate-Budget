@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/output.css" />
+    <title>Расчет бюджета на выбранный период</title>
+    <style>
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.3s ease-in-out,
+          background-color 0.3s ease-in-out;
+      }
+
+      .overlay.active {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .notification {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        max-width: 90%;
+        text-align: center;
+        position: relative;
+        transform: translateY(-10px);
+        opacity: 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
+
+      .notification.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .close-button {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ddd;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .budget-number {
+        color: green;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .deficit {
+        color: red;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto py-8">
+      <h1 class="text-2xl mb-4">Расчет бюджета на выбранный период</h1>
+
+      <form>
+        <div class="mb-4">
+          <label class="block mb-2">Доходы:</label>
+          <input
+            type="text"
+            id="income"
+            class="w-full p-2 border border-gray-300 rounded"
+            pattern="[0-9]*"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block mb-2">Расходы:</label>
+          <input
+            type="text"
+            id="expenses"
+            class="w-full p-2 border border-gray-300 rounded"
+            pattern="[0-9]*"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block mb-2">Выберите период:</label>
+          <select id="period" class="w-full p-2 border border-gray-300 rounded">
+            <option value="1">1 месяц</option>
+            <option value="3">3 месяца</option>
+            <option value="6">6 месяцев</option>
+            <option value="12">12 месяцев</option>
+          </select>
+        </div>
+
+        <button
+          type="button"
+          onclick="calculateBudget()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Рассчитать бюджет
+        </button>
+      </form>
+
+      <div id="notificationOverlay" class="overlay">
+        <div id="notification" class="notification">
+          <span id="notificationText"></span>
+          <span class="close-button" onclick="closeNotification()"
+            >&times;</span
+          >
+        </div>
+      </div>
+    </div>
+    <script src="./js/main.js"></script>
+    <script src="./js/calculateBudget.js"></script>
+    <script src="./js/closeNotification.js"></script>
+    <script src="./js/showNotification.js"></script>
+  </body>
+</html>
